@@ -13,7 +13,9 @@ public abstract class Drink {
 
     public abstract void createDrink();
 
-    public abstract void addMore();
+    public void addMore() {
+        System.out.println("Add milk and sugar.");
+    }
 
     public final void serveDrink() {
         System.out.println("Pour into cup.");
