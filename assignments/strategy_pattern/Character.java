@@ -1,17 +1,17 @@
 package assignments.strategy_pattern;
 
 public class Character {
-    private ICharacterSpecies characterSpecies;
     private IWeapon characterWeapon;
+    private String characterSpecies;
 
     // Character Constructor
-    public Character(ICharacterSpecies characterSpecies, IWeapon characterWeapon) {
+    public Character(String characterSpecies, IWeapon characterWeapon) {
         this.characterSpecies = characterSpecies;
         this.characterWeapon = characterWeapon;
     }
 
     // Set character species
-    public void setCharacterSpecies(ICharacterSpecies characterSpecies) {
+    public void setCharacterSpecies(String characterSpecies) {
         this.characterSpecies = characterSpecies;
     }
 
@@ -21,8 +21,8 @@ public class Character {
     }
 
     // get character species
-    public String turnSpecies() {
-        return characterSpecies.getSpecies();
+    public String getSpecies() {
+        return characterSpecies;
     }
 
     // get character weapon

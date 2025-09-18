@@ -30,15 +30,15 @@ public class StrategyGame {
         chosenCharacter = userInput.nextLine();
 
         if (chosenCharacter.equalsIgnoreCase("knight")) {
-            player = new Character(new Knight(), new Sword());
+            player = new Character("knight", new Sword());
         } else if (chosenCharacter.equalsIgnoreCase("archer")) {
-            player = new Character(new Archer(), new Arrows());
+            player = new Character("archer", new Arrows());
         } else if (chosenCharacter.equalsIgnoreCase("mage")) {
-            player = new Character(new Mage(), new Fireball());
+            player = new Character("mage", new Fireball());
         } else if (chosenCharacter.equalsIgnoreCase("rogue")) {
-            player = new Character(new Rogue(), new Sword());
+            player = new Character("rogue", new Sword());
         } else if (chosenCharacter.equalsIgnoreCase("barbarian")) {
-            player = new Character(new Barbarian(), new Arrows());
+            player = new Character("barbarian", new Arrows());
         }
 
         System.out.println("Oh no! A Dragon!!!");
@@ -77,7 +77,7 @@ public class StrategyGame {
             player.setCharacterWeapon(new Fireball());
         }
 
-        System.out.println("The " + player.turnSpecies() + " swings a " + player.fireWeapon() + "!");
+        System.out.println("The " + player.getSpecies() + " attacks with " + player.fireWeapon() + "!");
 
         userInput.close();
     }
