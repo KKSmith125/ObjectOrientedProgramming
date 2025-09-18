@@ -22,9 +22,7 @@ public class TemplateMethodRecipe {
             userFood = new Pancakes();
         }
 
-        userFood.gatherIngredients();
-        userFood.prepareFood();
-        userFood.serveFood();
+        userFood.order();
 
         System.out.println("Would you like coffee or tea as well?");
 
@@ -44,7 +42,7 @@ public class TemplateMethodRecipe {
             System.out.println("Would you like milk and sugar with your coffee (y/n)?");
             userChoice = userInput.nextLine();
             if (userChoice.equalsIgnoreCase("y") || userChoice.equalsIgnoreCase("yes")) {
-                userDrink.addMore();
+                userDrink.addMore(true);
             }
         }
 

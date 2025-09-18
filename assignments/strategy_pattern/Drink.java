@@ -1,6 +1,8 @@
 package assignments.strategy_pattern;
 
 public abstract class Drink {
+    boolean addition = true;
+
     public final void order(String addition) {
         boilWater();
         createDrink();
@@ -13,8 +15,8 @@ public abstract class Drink {
 
     public abstract void createDrink();
 
-    public void addMore() {
-        System.out.println("Add milk and sugar.");
+    public void addMore(boolean addition) {
+        this.addition = addition;
     }
 
     public final void serveDrink() {
