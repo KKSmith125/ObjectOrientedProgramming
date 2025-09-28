@@ -40,12 +40,6 @@ public class TextEditor {
             System.out.println("Could not find: " + userInput);
         }
 
-        // Copy proof
-        System.out.println("\nOur clip board");
-        System.out.println("\"" + text.getClipBoard() + "\"");
-        System.out.println("\nOur current text:");
-        System.out.println(text.getTextBlock());
-
         // Cut setup
         System.out.println("\nPick a word in the greeting to cut!");
         userInput = inputScanner.nextLine();
@@ -59,12 +53,6 @@ public class TextEditor {
             System.out.println("Could not find: " + userInput);
         }
 
-        // Cut proof
-        System.out.println("\nOur clip board");
-        System.out.println("\"" + text.getClipBoard() + "\"");
-        System.out.println("\nOur current text:");
-        System.out.println(text.getTextBlock());
-
         // Paste setup
         System.out.println("\nShould we paste our clipboard?");
         userInput = inputScanner.nextLine();
@@ -76,12 +64,6 @@ public class TextEditor {
             keyboard.setCommand("paste", new PasteCommand(text, paste));
             keyboard.pressKey("paste");
         }
-
-        // Paste proof
-        System.out.println("\nOur clip board");
-        System.out.println("\"" + text.getClipBoard() + "\"");
-        System.out.println("\nOur current text:");
-        System.out.println(text.getTextBlock());
 
         // Next action setup
 
@@ -125,7 +107,7 @@ public class TextEditor {
                     System.out.println("Unknown command");
             }
 
-            // Next action proof
+            // Action proof
             System.out.println("\nOur clip board");
             System.out.println("\"" + text.getClipBoard() + "\"");
             System.out.println("\nOur current text:");
