@@ -84,18 +84,33 @@ public class TextEditor {
         System.out.println(text.getTextBlock());
 
         // Next action setup
-        while (true) {
+
+        while (!userInput.equalsIgnoreCase("quit")) {
             System.out.println("\nWhat would you like to do now 'copy'/'cut'/'paste'/'redo'/'undo'/'quit'?");
             userInput = inputScanner.nextLine();
 
             switch (userInput.toLowerCase()) {
                 case "copy":
+                    System.out.println("\nPick a word in the greeting to copy!");
+                    userInput = inputScanner.nextLine();
+                    start = text.getTextBlock().indexOf(userInput);
+                    end = start + userInput.length();
+                    keyboard.setCommand("copy", new CopyCommand(text, start, end));
                     keyboard.pressKey("copy");
                     break;
                 case "cut":
+                    System.out.println("\nPick a word in the greeting to cut!");
+                    userInput = inputScanner.nextLine();
+                    start = text.getTextBlock().indexOf(userInput);
+                    end = start + userInput.length();
+                    keyboard.setCommand("cut", new CutCommand(text, start, end));
                     keyboard.pressKey("cut");
                     break;
                 case "paste":
+                    System.out.println("\nWhat index would you like to paste to?");
+                    paste = inputScanner.nextInt();
+                    inputScanner.nextLine();
+                    keyboard.setCommand("paste", new PasteCommand(text, paste));
                     keyboard.pressKey("paste");
                     break;
                 case "undo":
@@ -109,6 +124,7 @@ public class TextEditor {
                 default:
                     System.out.println("Unknown command");
             }
+
             // Next action proof
             System.out.println("\nOur clip board");
             System.out.println("\"" + text.getClipBoard() + "\"");
