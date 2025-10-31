@@ -10,6 +10,8 @@ public abstract class Pizza {
     protected Dough dough;
     protected Sauce sauce;
     protected Cheese cheese;
+    protected Sausage sausage;
+    protected Veggies veggies;
     protected List<Topping> toppings = new ArrayList<>();
 
     public abstract void prepare();

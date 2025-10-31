@@ -13,4 +13,8 @@ public interface PizzaIngredientFactory {
     public Pepperoni createPepperoni();
 
     public Parmesan createParmesan();
+
+    public Sausage createSausage();
+
+    public Veggies createVeggies();
 }

@@ -2,16 +2,16 @@ package labs.abstract_factory;
 
 import labs.abstract_factory.ingredients.*;
 
-public class NYPizzaIngredientFactory implements PizzaIngredientFactory {
+public class ItalianPizzaIngredientFactory implements PizzaIngredientFactory {
 
     @Override
     public Dough createDough() {
-        return new ThinCrustDough();
+        return new ThickCrust();
     }
 
     @Override
     public Sauce createSauce() {
-        return new Marinara();
+        return new WhiteSauce();
     }
 
     @Override
