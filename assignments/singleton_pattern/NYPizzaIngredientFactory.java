@@ -1,6 +1,7 @@
 package assignments.singleton_pattern;
 
 public class CheesePizza extends Pizza {
+    SingletonLogger logger = SingletonLogger.getInstance();
     PizzaIngredientFactory ingredientFactory;
 
     public CheesePizza(PizzaIngredientFactory ingredientFactory) {
@@ -14,5 +15,6 @@ public class CheesePizza extends Pizza {
         sauce = ingredientFactory.createSauce();
         cheese = ingredientFactory.createCheese();
         toppings.add(ingredientFactory.createParmesan());
+        logger.log("INFO", "The pizza is being prepared!");
     }
 }

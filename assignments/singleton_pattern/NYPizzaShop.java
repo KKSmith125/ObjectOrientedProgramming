@@ -3,6 +3,7 @@ package assignments.singleton_pattern;
 public class NYPizzaShop extends PizzaShop {
     @Override
     protected Pizza createPizza(String type) {
+        SingletonLogger logger = SingletonLogger.getInstance();
         Pizza pizza = null;
         final PizzaIngredientFactory ingredientFactory = new NYPizzaIngredientFactory();
 
@@ -12,6 +13,8 @@ public class NYPizzaShop extends PizzaShop {
         } else if (type.equalsIgnoreCase("pepperoni")) {
             pizza = new PepperoniPizza(ingredientFactory);
             pizza.setName("New York Style Pepperoni Pizza");
+        } else {
+            logger.log("CRITICAL", "That isn't a choice!");
         }
 
         return pizza;
