@@ -1,5 +1,8 @@
 package assignments.singleton_pattern;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class SingletonLogger {
     private static SingletonLogger singletonLoggerInstance;
     String level;
@@ -13,8 +16,10 @@ public class SingletonLogger {
     }
 
     public void log(String level, String statement) {
-        System.out.println("Level: " + level);
-        System.out.println("Statement: " + statement);
+        LocalDateTime now = LocalDateTime.now();
+        String timestamp = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        System.out.println("[" + timestamp + "] [" + level + "]" + statement);
     }
 
     public static SingletonLogger getInstance() {

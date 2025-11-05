@@ -9,8 +9,12 @@ public abstract class PizzaShop {
 
         if (pizza != null) {
             pizza.prepare();
+            logger.log("INFO", "The pizza is being prepared!");
             pizza.bake();
+            logger.log("WARN", "The oven is heating up a few degrees too high!");
+            logger.log("CRITICAL", "The pizza is burning!");
             pizza.cut();
+            logger.log("WARN", "The cut is not centered!");
             pizza.box();
             logger.log("WARN", "Even though the pizza exists, make sure it's being made correctly!");
         }

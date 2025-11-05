@@ -12,9 +12,10 @@ public class CheesePizza extends Pizza {
     public void prepare() {
         System.out.println("Preparing " + name);
         dough = ingredientFactory.createDough();
+        logger.log("INFO", "The dough is being created!");
         sauce = ingredientFactory.createSauce();
+        logger.log("INFO", "The pizza is getting spread!");
         cheese = ingredientFactory.createCheese();
         toppings.add(ingredientFactory.createParmesan());
-        logger.log("INFO", "The pizza is being prepared!");
     }
 }
