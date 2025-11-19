@@ -1,5 +1,7 @@
-public class VLCAdapter implements AudioMediaPlayer() {
-    VLCPlayer VLCPlayer;
+package assignments.adapter_pattern;
+
+public class VLCAdapter implements AudioMediaPlayer {
+    VLCPlayer vlcPlayer;
 
     public VLCAdapter(VLCPlayer vlcPlayer) {
         this.vlcPlayer = vlcPlayer;

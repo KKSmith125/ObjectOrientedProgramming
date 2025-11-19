@@ -1,4 +1,6 @@
-public class MP4Adapter implements AudioMediaPlayer() {
+package assignments.adapter_pattern;
+
+public class MP4Adapter implements AudioMediaPlayer {
     MP4Player mp4Player;
 
     public MP4Adapter(MP4Player mp4Player) {
