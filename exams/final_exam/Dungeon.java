@@ -22,6 +22,7 @@ public class Dungeon {
     private void createRooms(){
         createBossAndKeyRooms();
         createPlayerSpawnRoom();
+        //Fills in the rooms array with geeral size 5 (preset) rooms on the current floor (preset but can be changed).
         for(int y = 0; y < rooms.length; ++y){
             for (int x = 0; x < rooms[y].length; x++) {
                 if(rooms[y][x] == null){
@@ -38,6 +39,7 @@ public class Dungeon {
         createRooms();
     }
 
+    //Creates Boss and Key Rooms in a random location in the rooms array
     private void createBossAndKeyRooms(){
         Random random = new Random();
         int x = random.nextInt(size);
@@ -55,10 +57,12 @@ public class Dungeon {
         }
     }
 
+    //A win happens when you make it to floor 5 and beat the boss
     public boolean beaten(){
         return ((floor >= 5) && bossRoom.getEnemy().isDefeated());
     }
 
+    //Creates a spawn room at a random spot in the rooms array and puts the player's location in that room
     private void createPlayerSpawnRoom(){
         Random random = new Random();
         int x;
@@ -76,10 +80,12 @@ public class Dungeon {
         }
     }
 
+    //Get which room the player is in
     public DungeonRoom getCurrentRoom(){
         return rooms[playerY][playerX];
     }
 
+    //Decides whether the player can move into the next room in a certain direction
     public void movePlayer(String direction){
         switch (direction.toLowerCase()) {
             case "north":
@@ -122,9 +128,11 @@ public class Dungeon {
                 break;
         }
 
+        //Marks the entered room as discovered
         getCurrentRoom().discoverRoom();
     }
 
+    //Has player move in a random location and calls the above method to enter a new room
     public void playerRuns(){
         int randomDirection = random.nextInt(4);
         String direction = "";
@@ -149,10 +157,12 @@ public class Dungeon {
         movePlayer(direction);
     }
 
+    //Returns what room the player is in
     public void look(){
         System.out.println(getCurrentRoom());
     }
 
+    //Return the String describing the layout of the overall Dungeon
     public String toString(){
         StringBuffer dungeonInfo = new StringBuffer();
         dungeonInfo.append("\n");
@@ -174,6 +184,7 @@ public class Dungeon {
         return dungeonInfo.toString();
     }
 
+    //Prints where the player is in relation to the overrall map of the Dungeon
     public void map(){
         System.out.printf("Player Coordinates: X: %d, Y: %d \n", playerX, playerY);
         for(int y = 0; y < rooms.length; ++y){

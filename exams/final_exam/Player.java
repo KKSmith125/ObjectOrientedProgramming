@@ -39,6 +39,7 @@ public class Player {
         populateWeaponList();
     }
 
+    //Starting weapons
     private void populateWeaponList(){
         weaponList.add("short sword");
         weaponList.add("ax");
@@ -50,6 +51,7 @@ public class Player {
         return health;
     }
 
+    //Returns health bar string
     public String getDisplayHealth(){
         String displayHealth = health + "/" + maxHealth; 
         return displayHealth;
@@ -59,6 +61,7 @@ public class Player {
         return level;
     }
 
+    //Displays a player taking damage
     public void reduceHealth(int damage){
         StringBuffer display = new StringBuffer();
         display.append("* * * * *\n");
@@ -85,6 +88,7 @@ public class Player {
         System.out.println(display);
     }
 
+    //Describes the state the damage taken puts the player in
     private String checkHealth(){
         StringBuffer display = new StringBuffer();
         display.append("You feel ");
@@ -102,6 +106,7 @@ public class Player {
         return display.toString();
     }
 
+    //Heals the player
     public void gainHealth(int healing){
         int oldHealth = health;
         health = health + healing;
@@ -114,6 +119,7 @@ public class Player {
         System.out.println(display);
     }
 
+    //Handles XP increase and leveling up
     public void gainXP(int xpUp){
         if (xpUp > 0){
             System.out.println("You gained " + xpUp + " XP!");
@@ -125,11 +131,13 @@ public class Player {
         }
     }
 
+    //Shows player XP bar
     public String getDisplayXP(){
         String displayXP = experience + "/" + neededExperience; 
         return displayXP;
     }
 
+    //Levels up the player and sets somewhat random strength, maxHealth, health, and needed experience for next level-up
     private void gainLevel(){
         ++level;
         StringBuffer display = new StringBuffer();
@@ -167,6 +175,7 @@ public class Player {
         return equippedWeapon;
     }
 
+    //Shows magic buggs
     private void getMagic(){
         StringBuffer display = new StringBuffer();
         if(level == 3){
@@ -264,6 +273,7 @@ public class Player {
         System.out.println(display);
     }
 
+    //Determines if a player can equip something and how it affects them
     public void equipItem(String item){
         StringBuffer display = new StringBuffer();
         item = item.toLowerCase();
@@ -299,7 +309,7 @@ public class Player {
                 display.append(".\n");
             }
         } else {
-            display.append("You you do not have a ");
+            display.append("You do not have a ");
             display.append(item);
             display.append(".\n");
         }
@@ -307,10 +317,12 @@ public class Player {
         System.out.println(display);
     }
 
+    //Returns if a player has a key
     public boolean hasKey(){
         return itemBag.contains("dungeon key");
     }
 
+    //Sets that a key has been used if available
     public boolean useKey(){
         StringBuffer display = new StringBuffer();
         boolean keyUsed = false;
@@ -355,6 +367,7 @@ public class Player {
         return weaponDamage;
     }
 
+    //Returns the damage the player inflicts based on randomization, magic, and the equipped weapon
     public int getDamage(){
         int randomNumber = random.nextInt(strength);
         int damage = randomNumber + getWeaponDamage(equippedWeapon);
@@ -379,6 +392,7 @@ public class Player {
         }
     }
 
+    //Prints items in your bag and their damage
     public void checkBag(){
         StringBuffer display = new StringBuffer();
         display.append("In your bag you have:\n");
@@ -395,6 +409,7 @@ public class Player {
         System.out.println(display);
     }
 
+    //Adds health from a potion (randomization in play)
     public void useHealthPotion(){
         if(itemBag.remove("health potion")){
             System.out.println("You drink a health potion!\n");
@@ -429,6 +444,7 @@ public class Player {
         return totalGoldBags;
     }
 
+    //Outputs gold collected
     public String stats(){
         StringBuffer playerStats = new StringBuffer();
         int totalGoldBags = bagsOfGold();
@@ -446,6 +462,7 @@ public class Player {
         return playerStats.toString();
     }
 
+    //Displays player's current info
     public String toString(){
         StringBuffer playerInfo = new StringBuffer();
         playerInfo.append("HP: ");

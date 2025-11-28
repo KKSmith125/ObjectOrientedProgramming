@@ -21,6 +21,8 @@ public class DungeonRoom {
     private String roomType;
     private boolean roomDiscovered = false;
 
+    //Creates a base level dungeon and increments the nextRoomNumber to point to the next room
+    //Allows changes to difficulty based on floor and random room population
     public DungeonRoom(int floorLevel, int roomX, int roomY, int dungeonSize){
         roomNumber = nextRoomNumber;
         enemyChance = 50;
@@ -37,6 +39,8 @@ public class DungeonRoom {
         nextRoomNumber++;
     }
 
+    //Creates special rooms (spawn, boss and key rooms)
+    //Increments the nextRoomNumber to point to the next room and randomly populates the special room
     public DungeonRoom(int floorLevel, int roomX, int roomY, int dungeonSize, String specialRoom){
         roomNumber = nextRoomNumber;
         itemInRoom = false;
@@ -77,6 +81,7 @@ public class DungeonRoom {
         }
     }
 
+    //Sets room populace and item based on spawn chance
     private void populateRoom(){
         int randomNumber = random.nextInt(100);
 
@@ -93,6 +98,7 @@ public class DungeonRoom {
         }
     }
 
+    //Spawns a new enemy if a lower chance is hit than original enemy spawn chance
     public void spawnNewEnemy(){
         int randomNumber = random.nextInt(100);
 
@@ -102,11 +108,13 @@ public class DungeonRoom {
         }
     }
 
+    //Determines if the player can get the key from the key room
     public boolean getCanUseKey(){
         boolean canUseKey = (roomType.equalsIgnoreCase("boss") && roomEnemy.isDefeated());
         return canUseKey;
     }
 
+    //Popuulates the special rooms depending on what type of room it is
     private void populateSpecialRoom(String specialRoom){
         if (specialRoom.equals("player")){
             itemInRoom = false;
@@ -123,6 +131,7 @@ public class DungeonRoom {
         }
     }
 
+    //Decides if an enemy is going to spawn in the key room and adds a key to the room
     private void populateKeyRoom(){
         int randomNumber = random.nextInt(100);
 
@@ -133,6 +142,7 @@ public class DungeonRoom {
         itemInRoom = true;
     }
 
+    //Adds room item based on random chance and rarity
     private void setRoomItem(){
         int randomNumber = random.nextInt(100);
         itemInRoom = true;
@@ -153,6 +163,7 @@ public class DungeonRoom {
         }
     }
 
+    //Adds room item based on random chance and rarity
     private void setBossRoomItem(){
         int randomNumber = random.nextInt(100) + floorLevel * 5;
         if(randomNumber < 30) {
@@ -169,10 +180,12 @@ public class DungeonRoom {
         itemInRoom = true;
     }
 
+    //Returns whether the room contains an item
     public boolean itemInRoom(){
         return itemInRoom;
     }
 
+    //Returns what item the player takes from the room
     public String takeRoomItem(){
         String itemTaken = roomItem;
         roomItem = "";
@@ -192,6 +205,7 @@ public class DungeonRoom {
         return (roomEnemy != null) && (!roomEnemy.isDefeated());
     }
 
+    //Sets the room icon for the map
     public String getRoomIcon(){
         String  roomIcon = "?";
         if(roomDiscovered){
@@ -216,13 +230,16 @@ public class DungeonRoom {
         return roomIcon;
     }
 
+    //Sets the room as discovered
     public void discoverRoom(){
         roomDiscovered = true;
     }
 
+    //
     public String toString(){
         StringBuffer roomInfo = new StringBuffer();
 
+        //Shows the ways that the player can move from here
         List<String> directionList = new ArrayList<>();
         if(roomY != 0){
             directionList.add("north");
@@ -256,6 +273,8 @@ public class DungeonRoom {
                 roomInfo.append("and ");
             }
         }
+        
+        //Shows what items and enemies are in the room
         roomInfo.append("\n\n");
         if(roomEnemy != null){
             roomInfo.append(roomEnemy);

@@ -29,12 +29,14 @@ public class Enemy {
         random = new Random();
     }
 
+    //Sets floor level of the current enemy and creates a new enemy
     public Enemy(int floorLevel){
        this();
        this.floorLevel = floorLevel;
        createEnemy();
     }
 
+    //Sets the floor level of the current boss and creates a new boss
     public Enemy(int floorLevel, String boss){
         this();
         maxHealth = 20;
@@ -49,11 +51,13 @@ public class Enemy {
         return health;
     }
 
+    //Return the enemy's current health bar as a string
     public String getDisplayHealth(){
         String displayHealth = health + "/" + maxHealth; 
         return displayHealth;
     }
 
+    //Damages enemy and returns experience if the enemy dies
     public int reduceHealth(int damage){
         int experienceRecieved = 0;
         health = health - damage;
@@ -66,6 +70,7 @@ public class Enemy {
         return experienceRecieved;
     }
 
+    //Displays a description of how the attack effects the enemy
     private void checkHealth(){
         StringBuffer display = new StringBuffer();
         display.append("The ");
@@ -85,16 +90,19 @@ public class Enemy {
         System.out.println(display);
     }
 
+    //Sets that the enemy is dead
     private void creatureDies(){
         System.out.println("  ** Congratulations!! You have defeated the " + enemyType + "!! ** \n");
         defeated = true;
     }
 
+    //Improves enemy health
     public void gainHealth(int healing){
         health = health + healing;
         health = (health > maxHealth) ? maxHealth : health;
     }
 
+    //Adds a random amount of damage to that of the weapon for the enemy's attack
     public int getDamage(){
         int randomNumber = random.nextInt(strength);
         int damage = randomNumber + weaponDamage;
@@ -111,10 +119,12 @@ public class Enemy {
         return damage;
     }
 
+    //Checks if the enemy is dead
     public boolean isDefeated(){
         return defeated;
     }
 
+    //Creates a lesser enemy based on random chance except for floor 5 (SubBoss enemy is created)
     private void createEnemy(){
        int randomNumber = random.nextInt(10);
 
@@ -155,7 +165,8 @@ public class Enemy {
         } else {
             createSubBossEnemy();
         }
-
+        
+        //Adds another enemy to add difficulty
         adjustDifficulty(floorLevel);
     }
 
@@ -198,8 +209,6 @@ public class Enemy {
     }
 
     private void createBossEnemy(){
-        
-
         if(floorLevel == 5){
             enemyType = "Hell Balor";
             maxHealth = 250;
@@ -209,11 +218,13 @@ public class Enemy {
             weaponDamage = 13;
             experience = 200;
         } else {
+            //Creates SubBoss and adds another enemy to add difficulty
             createSubBossEnemy();
             adjustDifficulty(floorLevel);
         }
     }
 
+    //Creates an enemy based on a random number and floor level
     private void adjustDifficulty(int floorLevel){
         if (floorLevel > 1){
             int randomNumber = random.nextInt(floorLevel * 20) + floorLevel * 5;
@@ -249,6 +260,7 @@ public class Enemy {
         }
     }   
 
+    //Describes enemy
     public String toString(){
         StringBuffer enemyInfo = new StringBuffer();
         enemyInfo.append("In front of you is a ");

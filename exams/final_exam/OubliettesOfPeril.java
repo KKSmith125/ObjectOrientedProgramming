@@ -9,7 +9,7 @@ public class OubliettesOfPeril {
     private static boolean alwaysLookWhenMoving = true;
     private static boolean alwaysMapWhenMoving = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         // This code should be refacted but there should be no difference for the end user
         // There are several "necessary updates and changes"
         // You should identify where design patterns will improve the architecture
@@ -19,6 +19,7 @@ public class OubliettesOfPeril {
         Scanner userInputScanner = new Scanner(System.in);
         while(playGame){
             greeting();
+            //Player decides whether to start the game
             playGame = enterTheDungeon(userInputScanner);
             if (playGame){                
                 Player player = new Player();
@@ -27,15 +28,17 @@ public class OubliettesOfPeril {
                 moreDungeonToGo = true;
                 System.out.println("Input 'commands' to see a list of commands");
                 while(player.alive() && moreDungeonToGo && notEscaped){
-                    
+                    //Loops through player decisions while they haven't beat the dungeon and are still alive
                     playerDecision(player, dungeon, userInputScanner);
                     moreDungeonToGo = !dungeon.beaten();
                 }
-
+                
+                //Winning Screen
                 if(!moreDungeonToGo){
                     congratualtionsOnWinning(player);
                 }
 
+                //Losing Screen
                 if(!player.alive()){
                     playGame = sorryAboutLosing(userInputScanner, player);
                 }
@@ -93,6 +96,7 @@ public class OubliettesOfPeril {
         System.out.printf(textFormat, displayText);
     }
 
+    //Asks whether the user wants to play the game
     public static boolean enterTheDungeon(Scanner userInputScanner){
         String userInput;
         boolean shouldEnter = false;
@@ -116,51 +120,66 @@ public class OubliettesOfPeril {
         System.out.println("");
         boolean advanceBattle = false; 
         
+        //Prints command list
         if(userInput.equalsIgnoreCase("commands") || userInput.equalsIgnoreCase("command")){
             commands();
+        //Gets the current room the user is in
         } else if(userInput.equalsIgnoreCase("look")){
             System.out.println(dungeon.getCurrentRoom());
+        //Sets it so that the user no longer looks around when they move
         } else if(userInput.equalsIgnoreCase("al")){
             alwaysLookWhenMoving = !alwaysLookWhenMoving;
+        //Same as above but not map displayed upon movement
         } else if(userInput.equalsIgnoreCase("am")){
             alwaysMapWhenMoving = !alwaysMapWhenMoving;
+        //Checks player stats
         } else if(userInput.equalsIgnoreCase("check")){
             System.out.println(player);
+        //Attack and run logic
         } else if(userInput.equalsIgnoreCase("attack") || 
                   userInput.equalsIgnoreCase("a") ||
                   userInput.equalsIgnoreCase("run") ||
                   userInput.equalsIgnoreCase("r")){
+            //Check if there is an enemy in the room and if there is advance the battle with attack or run
             if(dungeon.getCurrentRoom().isEnemyInRoom()){
                  advanceBattle = true;
                  battle(player, dungeon, userInput);
             } else {
                 System.out.println("There is no enemy alive in here. So you dont need to do that.");
             }
+        //Display map
         } else if(userInput.equalsIgnoreCase("map")){
             dungeon.map();
+        //Display bag
         } else if(userInput.equalsIgnoreCase("bag")){
             player.checkBag();
+        //Grab item logic
         } else if(userInput.equalsIgnoreCase("take")){
             advanceBattle = true;
+            //If there is an enemy in the room the take fails and you get attacked
             if(dungeon.getCurrentRoom().isEnemyInRoom()){
                 System.out.println("You foolishly try to grab the item right in front of the enemy.");
                 System.out.println("It attacks you!");
             } else {
+                //If there is no enemy and there is an item, the item is taken
                 if(dungeon.getCurrentRoom().itemInRoom()){
                     player.addItemToBag(dungeon.getCurrentRoom().takeRoomItem());
                 } else {
                     System.out.println("There is no item in here.");
                 }
             }
+        //Take health potion
         } else if(userInput.equalsIgnoreCase("p") || userInput.equalsIgnoreCase("potion")){
             player.useHealthPotion();
             advanceBattle = true;
+        //Equip logic (based on user input)
         } else if(userInput.equalsIgnoreCase("equip")){
             advanceBattle = true;
             System.out.println("What would you like to equip?");
             System.out.println("(Choose something from your bag)");
             String equipInput = userInputScanner.nextLine().trim();
             player.equipItem(equipInput);
+        //Player wants to move in a direction
         } else if(userInput.equalsIgnoreCase("north") || 
                   userInput.equalsIgnoreCase("n") || 
                   userInput.equalsIgnoreCase("south") || 
@@ -169,8 +188,10 @@ public class OubliettesOfPeril {
                   userInput.equalsIgnoreCase("e") ||
                   userInput.equalsIgnoreCase("west") ||  
                   userInput.equalsIgnoreCase("w")){
+            //Must run or attack enemy if present to move
             if(dungeon.getCurrentRoom().isEnemyInRoom()){
                 System.out.println("You cannot move while an enemy is in the room unless you run");
+            //Move player if no enemy and display chosen movement settings
             } else {
                 dungeon.movePlayer(userInput);
                 if(alwaysMapWhenMoving){
@@ -180,6 +201,7 @@ public class OubliettesOfPeril {
                     System.out.println(dungeon.getCurrentRoom());
                 }
             }
+        //Use key if present and move player up floor if key is used
         } else if(userInput.equalsIgnoreCase("key")){
             if(dungeon.getCurrentRoom().getCanUseKey()){
                 if(player.useKey()){
@@ -188,7 +210,7 @@ public class OubliettesOfPeril {
             } else {
                 System.out.println("You cannot use a dungeon key in this room.");
             }
-
+        //Rest and heal logic (can't if enemy is present and enemy spawns after rest)
         } else if(userInput.equalsIgnoreCase("rest")){
             if(dungeon.getCurrentRoom().isEnemyInRoom()){
                 System.out.println("You cannot rest while an enemy is in the room.");
@@ -196,20 +218,23 @@ public class OubliettesOfPeril {
                 player.rest();
                 dungeon.getCurrentRoom().spawnNewEnemy();
             }
-
+        //Exit logic
         } else if(userInput.equalsIgnoreCase("exit")){
             exitGame();
+        //Invalid command
         } else {
             System.out.println("That was an invalid command.");
             System.out.println("Input the command - 'commands' to see a list of commands");
         } 
 
+        //Enemy attack logic upon battle advance
         if(advanceBattle && dungeon.getCurrentRoom().isEnemyInRoom() && !dungeon.getCurrentRoom().getEnemy().isDefeated()){
                 int enemyDamage = dungeon.getCurrentRoom().getEnemy().getDamage();
                 player.reduceHealth(enemyDamage);
         }      
     }
 
+    //Winner screen
     private static void congratualtionsOnWinning(Player player){
         System.out.println("You have conquered the Oubliettes Of Peril!!");
         System.out.println("Congratulations!!!!");
@@ -217,6 +242,7 @@ public class OubliettesOfPeril {
         System.out.println(player.stats());
     }
 
+    //Loser screen
     private static boolean sorryAboutLosing(Scanner userInputScanner, Player player){
         String userInput;
         boolean playAgain = false;
@@ -250,6 +276,7 @@ public class OubliettesOfPeril {
         return result;
     }
 
+    //Attack and run logic
     private static void battle(Player player, Dungeon dungeon, String userInput){
         Enemy enemy = dungeon.getCurrentRoom().getEnemy();
 
