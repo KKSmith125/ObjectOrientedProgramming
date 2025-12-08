@@ -5,10 +5,10 @@ import java.util.Random;
 public class Dungeon {
     private int floor;
     private int size;
-    private DungeonRoom[][] rooms;
+    private AbstractDungeonRoom[][] rooms;
     private int playerX = 0;
     private int playerY = 0;
-    private DungeonRoom bossRoom;
+    private AbstractDungeonRoom bossRoom;
     private Random random;
     PartFactory factory = new DungeonRoomFactory();
 
@@ -82,7 +82,7 @@ public class Dungeon {
     }
 
     //Get which room the player is in
-    public DungeonRoom getCurrentRoom(){
+    public AbstractDungeonRoom getCurrentRoom(){
         return rooms[playerY][playerX];
     }
 
@@ -175,8 +175,8 @@ public class Dungeon {
         dungeonInfo.append(", ");
         dungeonInfo.append(playerY);
         dungeonInfo.append("\n");
-        for (DungeonRoom[] dungeonRooms : rooms) {
-            for (DungeonRoom dungeonRoom : dungeonRooms) {
+        for (AbstractDungeonRoom[] dungeonRooms : rooms) {
+            for (AbstractDungeonRoom dungeonRoom : dungeonRooms) {
                 dungeonInfo.append(dungeonRoom);
                 dungeonInfo.append("\n");
             }
