@@ -5,17 +5,17 @@ import java.util.Random;
 public class Dungeon {
     private int floor;
     private int size;
-    private DungeonRoom[][] rooms;
+    private OldDungeonRoom[][] rooms;
     private int playerX = 0;
     private int playerY = 0;
-    private DungeonRoom bossRoom;
+    private OldDungeonRoom bossRoom;
     private Random random;
 
     public Dungeon(){
         floor = 1;
         size = 5;
         random = new Random();
-        rooms =  new DungeonRoom[size][size];
+        rooms =  new OldDungeonRoom[size][size];
         createRooms();
     }
 
@@ -26,7 +26,7 @@ public class Dungeon {
         for(int y = 0; y < rooms.length; ++y){
             for (int x = 0; x < rooms[y].length; x++) {
                 if(rooms[y][x] == null){
-                    rooms[y][x] = new DungeonRoom(floor, x, y, size);
+                    rooms[y][x] = new OldDungeonRoom(floor, x, y, size);
                 }
             }
         }
@@ -35,7 +35,7 @@ public class Dungeon {
     public void newFloor(){
         ++floor;
         System.out.println("\nYou descend down, deeper into the dungeon!");
-        rooms =  new DungeonRoom[size][size];
+        rooms =  new OldDungeonRoom[size][size];
         createRooms();
     }
 
@@ -44,13 +44,13 @@ public class Dungeon {
         Random random = new Random();
         int x = random.nextInt(size);
         int y = random.nextInt(size);
-        rooms[y][x] = new DungeonRoom(floor, x, y, size, "key");
+        rooms[y][x] = new OldDungeonRoom(floor, x, y, size, "key");
         boolean bossRoomEmpty = true;
         while(bossRoomEmpty){
             x = random.nextInt(size);
             y = random.nextInt(size);
             if(rooms[y][x] == null){
-                rooms[y][x] = new DungeonRoom(floor, x, y, size, "boss");
+                rooms[y][x] = new OldDungeonRoom(floor, x, y, size, "boss");
                 bossRoomEmpty = false;
                 bossRoom = rooms[y][x];
             } 
@@ -72,7 +72,7 @@ public class Dungeon {
             x = random.nextInt(size);
             y = random.nextInt(size);
             if(rooms[y][x] == null){
-                rooms[y][x] = new DungeonRoom(floor, x, y, size, "player");
+                rooms[y][x] = new OldDungeonRoom(floor, x, y, size, "player");
                 playerRoomEmpty = false;
                 playerX = x;
                 playerY = y;
@@ -81,7 +81,7 @@ public class Dungeon {
     }
 
     //Get which room the player is in
-    public DungeonRoom getCurrentRoom(){
+    public OldDungeonRoom getCurrentRoom(){
         return rooms[playerY][playerX];
     }
 
@@ -174,8 +174,8 @@ public class Dungeon {
         dungeonInfo.append(", ");
         dungeonInfo.append(playerY);
         dungeonInfo.append("\n");
-        for (DungeonRoom[] dungeonRooms : rooms) {
-            for (DungeonRoom dungeonRoom : dungeonRooms) {
+        for (OldDungeonRoom[] dungeonRooms : rooms) {
+            for (OldDungeonRoom dungeonRoom : dungeonRooms) {
                 dungeonInfo.append(dungeonRoom);
                 dungeonInfo.append("\n");
             }
