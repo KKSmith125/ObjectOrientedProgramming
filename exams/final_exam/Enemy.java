@@ -15,6 +15,7 @@ public class Enemy {
     private String enemyType;
     private int floorLevel;
     private Random random;
+    private int experienceRecieved;
 
     public Enemy(){
         maxHealth = 3;
@@ -67,6 +68,10 @@ public class Enemy {
             creatureDies();
             experienceRecieved = experience;
         }
+        return experienceRecieved;
+    }
+
+    public int getLastExperience() {
         return experienceRecieved;
     }
 
